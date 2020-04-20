@@ -18,6 +18,28 @@ extract_bbref_table <- function(html_obj, table_id) {
   # convert data.frame column types and fill missing
   parse_table <- function(table) {
     
+    convert_to_numeric <- function(x) {
+      # tries to make numeric columns numeric (from char)
+      numeric_x <- suppressWarnings(as.numeric(x))
+      
+      if(!all(is.na(numeric_x))) {
+        x <- numeric_x
+      }
+      
+      return(x)
+    }
+    
+    empty_string_to_na <- function(x) {
+      
+      if(class(x) == "character") {
+        res <- ifelse(stringr::str_trim(x, "both") == "", NA, x)
+      } else {
+        res <- x
+      }
+      
+      return(res)
+    }
+    
     num_convert <- lapply(table, convert_to_numeric)
     na_convert <- lapply(num_convert, empty_string_to_na)
     
