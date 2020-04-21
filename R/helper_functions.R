@@ -30,6 +30,7 @@ parse_table <- function(table) {
   return(df)
 }
 
+
 extract_bbref_table <- function(html_obj, table_id) {
   
   headr_css <- paste(table_id, "> thead > tr > th")               # css for table headers
@@ -49,5 +50,19 @@ extract_bbref_table <- function(html_obj, table_id) {
   
   final_df <- parse_table(table_df)
   return(final_df)
+  
+}
+
+
+parse_htmlcomments <- function(html_obj) {
+  
+  parsed_html <- 
+    html_obj %>%
+    html_nodes(xpath = '//comment()') %>%     # select comment nodes
+    html_text() %>%                           # extract comment text
+    paste(collapse = '') %>%                  # collapse to a single string
+    read_html()
+  
+  return(parsed_html)
   
 }
