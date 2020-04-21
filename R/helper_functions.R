@@ -68,3 +68,23 @@ parse_htmlcomments <- function(html_obj) {
   return(parsed_html)
   
 }
+
+extract_tables_teampage <- function(tbl_id) {
+  
+  if(tbl_id == "#salaries2") {
+    
+    tbl <- 
+      html_nodes(html_parsed, tbl_id) %>% 
+      html_table() %>% 
+      data.frame(stringsAsFactors = FALSE)
+    
+    names(tbl) <- c("ranker", "player", "salary")
+    
+    } else {
+      
+      tbl <- extract_bbref_table(html_parsed, tbl_id)
+    }
+  
+  return(tbl)
+
+}
