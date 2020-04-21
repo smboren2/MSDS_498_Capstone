@@ -26,16 +26,19 @@ parse_table <- function(table) {
   na_convert <- lapply(num_convert, empty_string_to_na)
   
   df <- as.data.frame(na_convert, stringsAsFactors = FALSE)
+  df <- df[colMeans(is.na(df)) != 1]
   
   return(df)
 }
 
-
 extract_bbref_table <- function(html_obj, table_id) {
   
-  headr_css <- paste(table_id, "> thead > tr > th")               # css for table headers
-  table_css <- paste(table_id, "> tbody > tr > td")               # css for table values
-  colm1_css <- paste(table_id, "> tbody > tr > th:nth-child(1)")  # css for values in first column
+  headr_nodes <- html_nodes(html_obj, paste(table_id, "> thead > tr"))
+  headr_child <- paste0(":nth-child(", length(headr_nodes), ") > th")
+  
+  headr_css <- paste(table_id, paste0("> thead > tr", headr_child))     # css for table headers
+  table_css <- paste(table_id, "> tbody > tr > td")                     # css for table values
+  colm1_css <- paste(table_id, "> tbody > tr > th:nth-child(1)")        # css for values in first column
   
   # constructing the table
   table_heads <- html_nodes(html_obj, headr_css) %>% html_attr("data-stat")
@@ -52,7 +55,6 @@ extract_bbref_table <- function(html_obj, table_id) {
   return(final_df)
   
 }
-
 
 parse_htmlcomments <- function(html_obj) {
   
