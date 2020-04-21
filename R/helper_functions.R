@@ -1,3 +1,35 @@
+parse_table <- function(table) {
+  
+  convert_to_numeric <- function(x) {
+    # tries to make numeric columns numeric (from char)
+    numeric_x <- suppressWarnings(as.numeric(x))
+    
+    if(!all(is.na(numeric_x))) {
+      x <- numeric_x
+    }
+    
+    return(x)
+  }
+  
+  empty_string_to_na <- function(x) {
+    
+    if(class(x) == "character") {
+      res <- ifelse(stringr::str_trim(x, "both") == "", NA, x)
+    } else {
+      res <- x
+    }
+    
+    return(res)
+  }
+  
+  num_convert <- lapply(table, convert_to_numeric)
+  na_convert <- lapply(num_convert, empty_string_to_na)
+  
+  df <- as.data.frame(na_convert, stringsAsFactors = FALSE)
+  
+  return(df)
+}
+
 extract_bbref_table <- function(html_obj, table_id) {
   
   headr_css <- paste(table_id, "> thead > tr > th")               # css for table headers
@@ -15,40 +47,7 @@ extract_bbref_table <- function(html_obj, table_id) {
   table_df <- as.data.frame(table_matrix, stringsAsFactors = FALSE)
   names(table_df) <- table_heads
   
-  # convert data.frame column types and fill missing
-  parse_table <- function(table) {
-    
-    convert_to_numeric <- function(x) {
-      # tries to make numeric columns numeric (from char)
-      numeric_x <- suppressWarnings(as.numeric(x))
-      
-      if(!all(is.na(numeric_x))) {
-        x <- numeric_x
-      }
-      
-      return(x)
-    }
-    
-    empty_string_to_na <- function(x) {
-      
-      if(class(x) == "character") {
-        res <- ifelse(stringr::str_trim(x, "both") == "", NA, x)
-      } else {
-        res <- x
-      }
-      
-      return(res)
-    }
-    
-    num_convert <- lapply(table, convert_to_numeric)
-    na_convert <- lapply(num_convert, empty_string_to_na)
-    
-    df <- as.data.frame(na_convert, stringsAsFactors = FALSE)
-    
-    return(df)
-  }
-  
   final_df <- parse_table(table_df)
   return(final_df)
-
+  
 }
