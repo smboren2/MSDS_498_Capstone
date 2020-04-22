@@ -23,7 +23,7 @@ get_nba_team_season_data <- function(team_abbr, season_end) {
   includ_tbl_ids <- paste0("#", c("per_game","totals","per_minute","per_poss",
                                  "advanced","shooting","salaries2"))
   
-  other_tbls <- lapply(includ_tbl_ids, extract_tables_teampage)
+  other_tbls <- lapply(includ_tbl_ids, function(x) extract_tables_teampage(html_parsed, x))
   names(other_tbls) <- gsub(includ_tbl_ids, pattern = "#", replacement = "")
   
   all_tbls <- c(list(roster = roster_tbl), other_tbls)
