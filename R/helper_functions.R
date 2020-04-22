@@ -88,3 +88,95 @@ extract_tables_teampage <- function(tbl_id) {
   return(tbl)
 
 }
+
+select_df_cols <- function(tbl_name) {
+  
+  if(tbl_name == "roster") {
+    
+    cols <- c('number','player','pos','height','weight',
+              'birth_date','birth_country','years_experience','college')
+  }
+  
+  if(tbl_name == "per_game") {
+    
+    cols <- c('player','age','g','gs','mp_per_g',
+              'fg_per_g','fga_per_g',
+              'fg3_per_g','fg3a_per_g',
+              'fg2_per_g','fg2a_per_g',
+              'ft_per_g','fta_per_g',
+              'orb_per_g','drb_per_g','trb_per_g',
+              'ast_per_g','stl_per_g','blk_per_g',
+              'tov_per_g','pf_per_g','pts_per_g')
+  }
+  
+  if(tbl_name == "totals") {
+    
+    cols <- c('player','mp',
+              'fg','fga','fg_pct',
+              'fg3','fg3a','fg3_pct',
+              'fg2','fg2a','fg2_pct',
+              'efg_pct',
+              'ft','fta','ft_pct',
+              'orb','drb','trb',
+              'ast','stl','blk',
+              'tov','pf','pts')
+  }
+  
+  if(tbl_name == "per_minute") {
+    
+    cols <- c('player',
+              'fg_per_mp','fga_per_mp',
+              'fg3_per_mp','fg3a_per_mp',
+              'fg2_per_mp','fg2a_per_mp',
+              'ft_per_mp','fta_per_mp',
+              'orb_per_mp','drb_per_mp','trb_per_mp',
+              'ast_per_mp','stl_per_mp','blk_per_mp',
+              'tov_per_mp','pf_per_mp','pts_per_mp')
+  }
+  
+  if(tbl_name == "per_poss") {
+    
+    cols <- c('player',
+              'fg_per_poss','fga_per_poss',
+              'fg3_per_poss','fg3a_per_poss',
+              'fg2_per_poss','fg2a_per_poss',
+              'ft_per_poss','fta_per_poss',
+              'orb_per_poss','drb_per_poss','trb_per_poss',
+              'ast_per_poss','stl_per_poss','blk_per_poss',
+              'tov_per_poss','pf_per_poss','pts_per_poss',
+              'off_rtg','def_rtg')
+  }
+  
+  if(tbl_name == "advanced") {
+    
+    cols <- c('player',
+              'per','ts_pct',
+              'fg3a_per_fga_pct','fta_per_fga_pct',
+              'orb_pct','drb_pct','trb_pct',
+              'ast_pct','stl_pct','blk_pct',
+              'tov_pct','usg_pct',
+              'ows','dws','ws','ws_per_48',
+              'obpm','dbpm','bpm','vorp')
+  }
+  
+  if(tbl_name == "shooting") {
+    
+    cols <- c('player',
+              'avg_dist','fg2a_pct_fga',
+              'pct_fga_00_03','pct_fga_03_10','pct_fga_10_16','pct_fga_16_xx',
+              'fg3a_pct_fga',
+              'fg_pct_00_03','fg_pct_03_10','fg_pct_10_16','fg_pct_16_xx',
+              'fg2_pct_ast',
+              'pct_fg2_dunk','fg2_dunk',
+              'fg3_pct_ast','pct_fg3a_corner','fg3_pct_corner','fg3a_heave','fg3_heave')
+  }
+  
+  if(tbl_name == "salaries2") {
+    
+    cols <- c("player","salary")
+  }
+  
+  return(cols)
+  
+}
+  
