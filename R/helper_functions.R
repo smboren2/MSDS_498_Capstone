@@ -69,12 +69,12 @@ parse_htmlcomments <- function(html_obj) {
   
 }
 
-extract_tables_teampage <- function(tbl_id) {
+extract_tables_teampage <- function(html_parsed_obj, tbl_id) {
   
   if(tbl_id == "#salaries2") {
     
     tbl <- 
-      html_nodes(html_parsed, tbl_id) %>% 
+      html_nodes(html_parsed_obj, tbl_id) %>% 
       html_table() %>% 
       data.frame(stringsAsFactors = FALSE)
     
@@ -82,7 +82,7 @@ extract_tables_teampage <- function(tbl_id) {
     
     } else {
       
-      tbl <- extract_bbref_table(html_parsed, tbl_id)
+      tbl <- extract_bbref_table(html_parsed_obj, tbl_id)
     }
   
   return(tbl)
